@@ -1,14 +1,27 @@
 import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '@/components/EditScreenInfo';
+import {Calendar} from 'react-native-calendars';
+import { FontAwesome } from '@expo/vector-icons';
 import { Text, View } from '@/components/Themed';
+// import { Button } from 'react-native-paper';
 
 export default function TabTwoScreen() {
+  const selectedDates = [];
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Calendar</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/two.tsx" />
+     <FontAwesome name="bell" size={24} color="gray" style={{position: "relative", left: 150, marginTop: 20}} />
+     <Calendar style={styles.Calendar}
+      markingType={'period'}
+       onDayPress={day => {
+        selectedDates.push(day.dateString);
+      }}
+      onMonthChange={month => {
+        console.log('month changed', month);
+      }}
+      enableSwipeMonths={true}
+      theme={{
+        selectedDayBackgroundColor: '#00adf5',
+      }}
+     />
     </View>
   );
 }
@@ -17,15 +30,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
+  Calendar: {
+    width: 350,
+    marginTop: 20,
+  }
 });

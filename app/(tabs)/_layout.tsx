@@ -1,11 +1,12 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
+import { Link, Tabs, useNavigation } from 'expo-router';
 import { Pressable } from 'react-native';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import { View, Text } from '@/components/Themed';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -17,6 +18,7 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const navigation = useNavigation();
 
   return (
     <Tabs
@@ -52,6 +54,22 @@ export default function TabLayout() {
         options={{
           title: 'Calendar',
           tabBarIcon: ({ color }) => <TabBarIcon name="calendar" color={color} />,
+          headerLeft: () => (
+            
+            <Pressable onPress={() => navigation.goBack()}>
+            {({ pressed }) => (
+              <View style={{backgroundColor: "transparent", flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+                <FontAwesome
+                name="chevron-left"
+                size={15}
+                color={Colors[colorScheme ?? 'light'].text}
+                style={{ marginLeft: 15, opacity: pressed ? 0.5 : 1 }}
+                /> 
+                <Text style={{marginLeft: 10}}>Back</Text>
+              </View>
+            )} 
+          </Pressable>
+          ),
         }}
       />
       <Tabs.Screen
@@ -59,6 +77,22 @@ export default function TabLayout() {
         options={{
           title: 'AI Chat',
           tabBarIcon: ({ color }) => <TabBarIcon name="comments" color={color} />,
+          headerLeft: () => (
+            
+            <Pressable onPress={() => navigation.goBack()}>
+            {({ pressed }) => (
+              <View style={{backgroundColor: "transparent", flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+                <FontAwesome
+                name="chevron-left"
+                size={15}
+                color={Colors[colorScheme ?? 'light'].text}
+                style={{ marginLeft: 15, opacity: pressed ? 0.5 : 1 }}
+                /> 
+                <Text style={{marginLeft: 10}}>Back</Text>
+              </View>
+            )} 
+          </Pressable>
+          ),
         }}
       />
       <Tabs.Screen
@@ -66,6 +100,22 @@ export default function TabLayout() {
         options={{
           title: 'Health',
           tabBarIcon: ({ color }) => <TabBarIcon name="heartbeat" color={color} />,
+          headerLeft: () => (
+            
+            <Pressable onPress={() => navigation.goBack()}>
+            {({ pressed }) => (
+              <View style={{backgroundColor: "transparent", flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+                <FontAwesome
+                name="chevron-left"
+                size={15}
+                color={Colors[colorScheme ?? 'light'].text}
+                style={{ marginLeft: 15, opacity: pressed ? 0.5 : 1 }}
+                /> 
+                <Text style={{marginLeft: 10}}>Back</Text>
+              </View>
+            )} 
+          </Pressable>
+          ),
         }}
       />
       <Tabs.Screen
@@ -73,6 +123,22 @@ export default function TabLayout() {
         options={{
           title: 'Resources',
           tabBarIcon: ({ color }) => <TabBarIcon name="book" color={color} />,
+          headerLeft: () => (
+            
+            <Pressable onPress={() => navigation.goBack()}>
+            {({ pressed }) => (
+              <View style={{backgroundColor: "transparent", flex: 1, flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+                <FontAwesome
+                name="chevron-left"
+                size={15}
+                color={Colors[colorScheme ?? 'light'].text}
+                style={{ marginLeft: 15, opacity: pressed ? 0.5 : 1 }}
+                /> 
+                <Text style={{marginLeft: 10}}>Back</Text>
+              </View>
+            )} 
+          </Pressable>
+          ),
         }}
       />
     </Tabs>

@@ -1,14 +1,39 @@
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '@/components/EditScreenInfo';
+import { StyleSheet, ScrollView } from 'react-native';
 import { Text, View } from '@/components/Themed';
+import { Title } from 'react-native-paper';
+import ArticleCards from '@/components/ArticleCards';
+
 
 export default function TabTwoScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Resources</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/five.tsx" />
+      <ScrollView showsVerticalScrollIndicator={true}>
+        <Title style={styles.title}>Explore Resources to help you navigate your journey.</Title>
+        <Text style={styles.smallTitle}>Understanding your cycle</Text>
+        <View style={styles.flexContainer}>
+            <ScrollView horizontal={true}>
+              <ArticleCards cardTitle="Article Title" extLink='https://www.google.com'  />
+              <ArticleCards cardTitle="Article Title" extLink='https://www.google.com' />
+              <ArticleCards cardTitle="Article Title" extLink='https://www.google.com' />
+            </ScrollView>
+        </View>      
+        <Text style={styles.smallTitle}>How to make your period easier</Text>
+        <View style={styles.flexContainer}>
+            <ScrollView horizontal={true}>
+              <ArticleCards cardTitle="Article Title" extLink='https://www.google.com'  />
+              <ArticleCards cardTitle="Article Title" extLink='https://www.google.com' />
+              <ArticleCards cardTitle="Article Title" extLink='https://www.google.com' />
+            </ScrollView>
+        </View> 
+        <Text style={styles.smallTitle}>Medical Resources</Text>
+        <View style={styles.flexContainer}>
+            <ScrollView horizontal={true}>
+              <ArticleCards cardTitle="Article Title" extLink='https://www.google.com'  />
+              <ArticleCards cardTitle="Article Title" extLink='https://www.google.com' />
+              <ArticleCards cardTitle="Article Title" extLink='https://www.google.com' />
+            </ScrollView>
+        </View> 
+      </ScrollView>
     </View>
   );
 }
@@ -16,16 +41,23 @@ export default function TabTwoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
+    margin: 10,
+    padding: 10,
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: 'normal',
+    marginBottom: 20,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  smallTitle: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  flexContainer: {
+    flex: 1,
   },
 });
