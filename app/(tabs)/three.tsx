@@ -1,58 +1,123 @@
-import { StyleSheet, ScrollView } from 'react-native';
-import {TextInput} from 'react-native-paper';
-import { Button } from 'react-native-paper';
-import { Text, View } from '@/components/Themed';
+import { OpenAI } from "openai";
+import { useState } from "react";
+import { StyleSheet, ScrollView, TextInput, Button, Text } from "react-native";
+import { View } from "@/components/Themed";
+import KeyboardMaintainer from "@/components/KeyboardMaintainer";
+
+// Replace 'YOUR_OPENAI_API_KEY' with your actual OpenAI API key
+
+interface ChatMessage {
+  role: "user" | "ai";
+  content: any;
+}
+
+const openai = new OpenAI({
+  apiKey: "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",
+});
 
 export default function TabTwoScreen() {
+  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
+  const [userInput, setUserInput] = useState("");
+
+  const handleSendMessage = async () => {
+    if (userInput.trim() === "") return;
+
+    // Add user's message to chat history
+    // setChatHistory([...chatHistory, { role: 'user', content: userInput }]);
+
+    try {
+      const response = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo-0125",
+        messages: [
+          {
+            role: "system",
+            content:
+              "You are an assistant to women that have special medical needs such as PCOS, Endometriosis, pregnancy, etc. Your goal is to empower women with information on their specific conditions. They should feel confident in meeting with medical professionals and advocating for themselves and their health.",
+          },
+          { role: "user", content: userInput },
+        ],
+        max_tokens: 100, // Increase the value to allow longer messages
+        temperature: 0.2,
+        n: 1,
+        stop: "",
+      });
+
+      // Add AI's response to chat history
+      setChatHistory([
+        ...chatHistory,
+        { role: "user", content: userInput },
+        { role: "ai", content: response.choices[0].message.content },
+      ]);
+    } catch (error) {
+      console.error("Error calling OpenAI API:", error);
+      // Handle error as needed
+    }
+
+    // Clear user input
+    setUserInput("");
+  };
+
   return (
-    <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={true}>
-        <View style={styles.holdMessages}>
-         <Text>Messages</Text>
-        </View>
-        <View style={styles.holdInput}>
-          <TextInput style={styles.input} placeholder="Type your message here" />
-          <Button style={styles.button} onPress={() => console.log('Pressed')}>
-            <Text>Send</Text></Button>
-        </View>
-      </ScrollView>
-    </View>
+    <>
+      <View>
+        <KeyboardMaintainer>
+          {chatHistory.map((message, index) => (
+            <View
+              key={index}
+              style={[
+                styles.messageContainer,
+                message.role === "user" ? styles.userMessage : styles.aiMessage,
+              ]}
+            >
+              <Text>{message.content}</Text>
+            </View>
+          ))}
+          <View style={styles.inputContainer}>
+            <TextInput
+              multiline={true} 
+              style={styles.input}
+              placeholder="Type your message..."
+              value={userInput}
+              onChangeText={(text) => setUserInput(text)}
+            />
+            <Button title="Send" onPress={handleSendMessage} />
+          </View>
+        </KeyboardMaintainer>
+      </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+  chatContainer: {
+    padding: 6,
   },
-  button : {
-    backgroundColor: 'purple',
-    margin: 0,
-    height: "100%",
-    borderRadius: 0,
-    width: "20%",
-    alignItems: 'center',
-    justifyContent: 'center',
+  messageContainer: {
+    padding: 8,
+    borderRadius: 8,
+    marginBottom: 8,
+    maxWidth: "80%",
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  userMessage: {
+    alignSelf: "flex-end",
+    backgroundColor: "#3498db", // User message color
   },
-  holdMessages: {
-    height: "auto",
+  aiMessage: {
+    alignSelf: "flex-start",
+    backgroundColor: "#2ecc71", // AI message color
   },
-  holdInput: {
-   flexDirection: 'row',
-   margin: 0,
-   justifyContent: 'center',
-   alignItems: 'center',
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 16,
   },
   input: {
-    margin: 0,
-    padding: 0,
-    width: "80%",
-    borderRadius: 0,
-    borderBottomColor: "transparent",
-  }
+    flex: 1,
+    marginRight: 8,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    backgroundColor: "#fff",
+  },
 });

@@ -7,7 +7,7 @@ import ArticleCards from '@/components/ArticleCards';
 export default function TabTwoScreen() {
   return (
     <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={true}>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Title style={styles.title}>Explore Resources to help you navigate your journey.</Title>
         <Text style={styles.smallTitle}>Understanding your cycle</Text>
         <View style={styles.flexContainer}>

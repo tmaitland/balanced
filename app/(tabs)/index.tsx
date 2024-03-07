@@ -16,10 +16,10 @@ export default function TabOneScreen() {
           <Image source={require('../../assets/images/circle-of-arrows-gray.png')} style={styles.arrowsImage} />
           <Text style={{position: "absolute", left: 125, top: 115, fontSize: 16, color: "gray" }}>Follicular Phase</Text>
           <TextButton
-            title="17 days until next period"
+            title="Current Phase"
             buttonText="Tap To Log Period"
             // go to health tab
-            onPress={() => router.push('./two')} />
+            onPress={() => router.push('../modal')} />
         </View>
         <Cards
           cardTitle="Today's Insight"

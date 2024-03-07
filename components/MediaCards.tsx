@@ -8,7 +8,7 @@ import { StyleSheet } from 'react-native';
 export default function MediaCards({source, cardTitle, cardText}: {cardTitle: string, source: string, cardText: string}) {
     return (
         <Card mode='elevated' style={styles.card}>
-            <Card.Cover source={{ uri: source }} />
+            <Card.Cover style={styles.imageSize} source={{ uri: source }} />
             <Card.Content>
                 <Title style={styles.title}>{cardTitle}</Title>
                 <Paragraph>{cardText}</Paragraph>
@@ -27,6 +27,12 @@ const styles = StyleSheet.create({
   title : {
     fontSize: 16,
     padding: 5,
-  }
+  },
+  imageSize: {
+    width: "auto",
+    height: 200,
+    objectFit: 'cover',
+    
+  },
   
 });
