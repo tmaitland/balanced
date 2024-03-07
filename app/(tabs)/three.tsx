@@ -12,7 +12,7 @@ interface ChatMessage {
 }
 
 const openai = new OpenAI({
-  apiKey: "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",
+  apiKey: "",
 });
 
 export default function TabTwoScreen() {
